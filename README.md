@@ -1,3 +1,5 @@
+[![Docker Build Status](https://img.shields.io/docker/build/zcsevcik/docker-miktex.svg)](https://hub.docker.com/r/zcsevcik/docker-miktex/)
+
 # Dockerized MiKTeX
 
 This image allows you to run MiKTeX on any computer that supports Docker.
