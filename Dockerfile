@@ -1,22 +1,20 @@
-FROM ubuntu:xenial
+FROM debian:stretch-slim
 
-LABEL Description="Dockerized MiKTeX, Ubuntu 16.04" Vendor="Christian Schenk" Version="2.9.6526"
+LABEL Description="Dockerized MiKTeX, Debian 9" Vendor="Radek Sevcik" Version="2.9.6850"
 
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889
-RUN echo "deb http://miktex.org/download/ubuntu xenial universe" | tee /etc/apt/sources.list.d/miktex.list
-RUN apt-get update
-RUN apt-get install apt-transport-https -y
-RUN apt-get install miktex -y
-
-RUN apt-get install perl -y
-
-RUN initexmf --admin --force --mklinks
-RUN mpm --admin --install amsfonts
-RUN initexmf --admin --mkmaps
-RUN initexmf --admin --update-fndb
-
-RUN useradd -md /miktex miktex
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889 && \
+    echo "deb http://miktex.org/download/debian stretch universe" | sudo tee /etc/apt/sources.list.d/miktex.list && \
+    apt-get update && apt-get install --no-install-recommends -y \
+        apt-transport-https \
+        miktex \
+        perl && \
+    initexmf --admin --force --mklinks && \
+    mpm --admin --install amsfonts && \
+    initexmf --admin --mkmaps && \
+    initexmf --admin --update-fndb && \
+    useradd -md /miktex miktex && \
+    mkdir /miktex/work && chown miktex /miktex/work && \
+    mkdir /miktex/.miktex && chown miktex /miktex/.miktex
+    
 USER miktex
-RUN mkdir /miktex/work
-RUN mkdir /miktex/.miktex
 WORKDIR /miktex/work
