@@ -61,7 +61,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     mkdir /miktex/.miktex && chown miktex /miktex/.miktex && \
     wget -r --tries=10 http://ftp.linux.cz/pub/tex/local/cstug/olsak/vlna/vlna-1.5.tar.gz -O /tmp/vlna-1.5.tar.gz && \
     ( cd /tmp; tar xvf /tmp/vlna-1.5.tar.gz ) && \
-    ( cd /tmp/vlna-1.5; ./configure && make && make DESTDIR=/usr install ) && \
+    ( cd /tmp/vlna-1.5; ./configure --prefix=/usr && make && make install ) && \
     apt-get purge -y \
         apt-transport-https \
         ca-certificates \
@@ -69,7 +69,8 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         dirmngr \
         wget \
         build-essential \
-        && \    
+        && \
+    apt-get -y autoremove && \
     apt-get clean && rm -fr /var/lib/apt/lists/* /tmp/*
     
 USER miktex
