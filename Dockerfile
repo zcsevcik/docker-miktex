@@ -5,6 +5,7 @@ LABEL Description="Dockerized MiKTeX, Debian 9" Vendor="Radek Sevcik" Version="2
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && apt-get install --no-install-recommends -y \
         apt-transport-https \
+        ssl-cert \
         gnupg \
         dirmngr \
         && \        
@@ -15,7 +16,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         perl \
         && \
     initexmf --admin --verbose --force --mklinks && \
-    ( mpm --admin --verbose --install amsfonts || cat /var/log/miktex/mpmcli_admin.log ) && \
+    mpm --admin --verbose --install amsfonts || ( cat /var/log/miktex/mpmcli_admin.log; exit 1 ) && \
     initexmf --admin --verbose --mkmaps && \
     initexmf --admin --verbose --update-fndb && \
     useradd -md /miktex miktex && \
