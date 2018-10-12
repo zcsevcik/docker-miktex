@@ -18,8 +18,13 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         perl \
         && \
     initexmf --admin --verbose --force --mklinks && \
-    mpm --admin --verbose \
-        --install=amsfonts \
+    mpm --admin --verbose --install=amsfonts || ( cat /var/log/miktex/mpmcli_admin.log; exit 1 ) && \
+    initexmf --admin --verbose --mkmaps && \
+    initexmf --admin --verbose --update-fndb && \
+    useradd -md /miktex miktex && \
+    mkdir /miktex/work && chown -R miktex /miktex/work && \
+    mkdir /miktex/.miktex && chown -R miktex /miktex/.miktex && \
+    su - miktex -c "mpm --verbose \
         --install=acronym \
         --install=arabi \
         --install=babel-czech \
@@ -44,6 +49,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         --install=ifxetex \
         --install=listings \
         --install=lm \
+        --install=ltxbase \
         --install=mmap \
         --install=mptopdf \
         --install=oberdiek \ 
@@ -53,19 +59,12 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         --install=url \
         --install=xcolor \
         --install=xstring \       
-        || ( cat /var/log/miktex/mpmcli_admin.log; exit 1 ) && \
-    initexmf --admin --verbose --mkmaps && \
-    initexmf --admin --verbose --update-fndb && \
-    initexmf --admin --verbose --dump-by-name=pdflatex --engine=pdftex && \
-    useradd -md /miktex miktex && \
-    mkdir /miktex/work && chown -R miktex /miktex/work && \
-    mkdir /miktex/.miktex && chown -R miktex /miktex/.miktex && \
+        || ( cat /var/log/miktex/mpmcli_admin.log; exit 1 )" && \
     wget -r --tries=10 http://ftp.linux.cz/pub/tex/local/cstug/olsak/vlna/vlna-1.5.tar.gz -O /tmp/vlna-1.5.tar.gz && \
     ( cd /tmp; tar xvf /tmp/vlna-1.5.tar.gz ) && \
     ( cd /tmp/vlna-1.5; ./configure --prefix=/usr && make && make install ) && \
     apt-get purge -y \
         apt-transport-https \
-        ca-certificates \
         gnupg \
         dirmngr \
         wget \
