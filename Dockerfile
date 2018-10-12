@@ -5,7 +5,7 @@ LABEL Description="Dockerized MiKTeX, Debian 9" Vendor="Radek Sevcik" Version="2
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && apt-get install --no-install-recommends -y \
         apt-transport-https \
-        ssl-cert \
+        ca-certificates \
         gnupg \
         dirmngr \
         && \        
