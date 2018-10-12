@@ -9,8 +9,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         gnupg \
         dirmngr \
         wget \
-        gcc \
-        make \
+        build-essential \
         && \        
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889 && \
     echo "deb http://ftp.cvut.cz/tex-archive/systems/win32/miktex/setup/deb/ stretch universe" | tee /etc/apt/sources.list.d/miktex.list && \
@@ -62,15 +61,14 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     mkdir /miktex/.miktex && chown miktex /miktex/.miktex && \
     wget -r --tries=10 http://ftp.linux.cz/pub/tex/local/cstug/olsak/vlna/vlna-1.5.tar.gz -O /tmp/vlna-1.5.tar.gz && \
     ( cd /tmp; tar xvf /tmp/vlna-1.5.tar.gz ) && \
-    ( cd /tmp/vlna-1.5; ./configure && make && make install ) && \
+    ( cd /tmp/vlna-1.5; ./configure && make && make DESTDIR=/usr install ) && \
     apt-get purge -y \
         apt-transport-https \
         ca-certificates \
         gnupg \
         dirmngr \
         wget \
-        gcc \
-        make \
+        build-essential \
         && \    
     apt-get clean && rm -fr /var/lib/apt/lists/* /tmp/*
     
