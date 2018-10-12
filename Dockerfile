@@ -1,6 +1,6 @@
 FROM debian:stretch-slim
 
-LABEL Description="Dockerized MiKTeX, Debian 9" Vendor="Radek Sevcik" Version="2.9.6850"
+LABEL Description="Dockerized MiKTeX, Debian 9" Vendor="Radek Sevcik" Version="2.9.6840"
 
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && apt-get install --no-install-recommends -y \
