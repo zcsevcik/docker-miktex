@@ -56,9 +56,10 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         || ( cat /var/log/miktex/mpmcli_admin.log; exit 1 ) && \
     initexmf --admin --verbose --mkmaps && \
     initexmf --admin --verbose --update-fndb && \
+    initexmf --admin --verbose --dump-by-name=pdflatex --engine=pdftex && \
     useradd -md /miktex miktex && \
-    mkdir /miktex/work && chown miktex /miktex/work && \
-    mkdir /miktex/.miktex && chown miktex /miktex/.miktex && \
+    mkdir /miktex/work && chown -R miktex /miktex/work && \
+    mkdir /miktex/.miktex && chown -R miktex /miktex/.miktex && \
     wget -r --tries=10 http://ftp.linux.cz/pub/tex/local/cstug/olsak/vlna/vlna-1.5.tar.gz -O /tmp/vlna-1.5.tar.gz && \
     ( cd /tmp; tar xvf /tmp/vlna-1.5.tar.gz ) && \
     ( cd /tmp/vlna-1.5; ./configure --prefix=/usr && make && make install ) && \
