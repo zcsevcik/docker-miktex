@@ -20,7 +20,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
         && \
     initexmf --admin --verbose --force --mklinks && \
     mpm --admin --verbose \
-        --install amsfonts \
+        --install=amsfonts \
         --install=acronym \
         --install=arabi \
         --install=babel-czech \
