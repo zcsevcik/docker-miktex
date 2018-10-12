@@ -1,4 +1,4 @@
-[![Docker Build Status](https://img.shields.io/docker/build/zcsevcik/docker-miktex.svg)](https://hub.docker.com/r/zcsevcik/docker-miktex/)
+[![Docker Build Status](https://img.shields.io/docker/build/zcsevcik/miktex.svg)](https://hub.docker.com/r/zcsevcik/miktex/)
 
 # Dockerized MiKTeX
 
